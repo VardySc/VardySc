@@ -1,0 +1,62 @@
+print"Trench War game is gud!!"local Library = loadstring(game:HttpGet("https://pastebin.com/raw/vff1bQ9F"))() local Window = Library.CreateLib("Trench War V2", "LightTheme") local Tab = Window:NewTab("Player") local Section = Tab:NewSection("Player stuff")Section:NewSlider("Walkspeed", "Chage the player's walkspeed", 500, 0, function(s) -- 500 (MaxValue) | 0 (MinValue)
+    game.Players.LocalPlayer.Character.Humanoid.WalkSpeed = s
+end)Section:NewButton("Infinite Jump", "Infinite Jump cool", function()local InfiniteJumpEnabled = true
+game:GetService("UserInputService").JumpRequest:connect(function()
+	if InfiniteJumpEnabled then
+		game:GetService"Players".LocalPlayer.Character:FindFirstChildOfClass'Humanoid':ChangeState("Jumping")
+	end
+end) print("Injected") end)Section:NewButton("HitBox", "Op lol", function()loadstring(game:HttpGet(('https://pastebin.com/raw/TgWmJEaC'),true))() print("Injected") end)Section:NewButton("Teleport Tool", "Script", function()loadstring(game:HttpGet("https://pastebin.com/raw/CnrzahUZ"))() print("Injected") end)
+ 
+local Tab = Window:NewTab("Other")
+local Section = Tab:NewSection("Other scripts fr fr")Section:NewButton("Infinite Yield", "Script", function()loadstring(game:HttpGet('https://raw.githubusercontent.com/EdgeIY/infiniteyield/master/source'))()print("Injected") end)Section:NewButton("FE Invisible", "Script", function()loadstring(game:HttpGet('https://raw.githubusercontent.com/GhostPlayer352/Test4/main/Invisible%20Gui'))() print("injected") end)Section:NewButton("Fly Gui", "Script", function()loadstring(game:HttpGet("https://pastebin.com/raw/7t5q21ex"))() print("Injected") end)
+ 
+local Tab = Window:NewTab("ESP")
+local Section = Tab:NewSection("Esp stuff lol")Section:NewButton("Esp", "Script", function()loadstring(game:HttpGet("https://pastebin.com/raw/ULLN8m0c"))() print("Injected") end)Section:NewButton("Esp Name", "Script", function()-- Khởi tạo ESP object
+local Players = game:GetService("Players")
+local LocalPlayer = Players.LocalPlayer
+ 
+local function createBillboardGui(part)
+	local BillboardGui = Instance.new("BillboardGui")
+	BillboardGui.Name = "ESP"
+	BillboardGui.AlwaysOnTop = true
+	BillboardGui.Size = UDim2.new(0, 100, 0, 40)
+	BillboardGui.StudsOffset = Vector3.new(0, 3, 0)
+ 
+	local TextLabel = Instance.new("TextLabel")
+	TextLabel.Name = "Name"
+	TextLabel.BackgroundTransparency = 1
+	TextLabel.Size = UDim2.new(1, 0, 1, 0)
+	TextLabel.Text = part.Parent.Name
+	TextLabel.TextColor3 = Color3.new(1, 1, 1)
+	TextLabel.TextStrokeColor3 = Color3.new(0, 0, 0)
+	TextLabel.TextStrokeTransparency = 0
+	TextLabel.Font = Enum.Font.SourceSansBold
+	TextLabel.TextScaled = true
+	TextLabel.Parent = BillboardGui
+ 
+	BillboardGui.Parent = part
+end
+ 
+-- Tạo ESP cho toàn bộ người chơi
+for _, player in ipairs(Players:GetPlayers()) do
+	if player ~= LocalPlayer then
+		local character = player.Character
+		if character then
+			for _, part in ipairs(character:GetDescendants()) do
+				if part:IsA("BasePart") then
+					createBillboardGui(part)
+				end
+			end
+		end
+ 
+		player.CharacterAdded:Connect(function(character)
+			for _, part in ipairs(character:GetDescendants()) do
+				if part:IsA("BasePart") then
+					createBillboardGui(part)
+				end
+			end
+		end)
+	end
+end print("Injected") end)Section:NewButton("Box Esp", "Script", function()loadstring(game:HttpGet("https://pastebin.com/raw/J1LvtLRt"))() print("Injected") end)local Tab = Window:NewTab("Credits")local Section = Tab:NewSection("Creator: Masterpiecerickroll69")local Section = Tab:NewSection("If u have any questions feel free to ask!")local Section = Tab:NewSection("Discord: masterpiecerickroll69.")
+ 
+local ScreenGui = Instance.new("ScreenGui") ScreenGui.Name = "ScreenGui" ScreenGui.Parent = game.Players.LocalPlayer:WaitForChild("PlayerGui") ScreenGui.ResetOnSpawn = false local Toggle = Instance.new("TextButton") Toggle.Name = "Toggle" Toggle.Parent = ScreenGui Toggle.BackgroundColor3 = Color3.fromRGB(248, 248, 248) Toggle.Position = UDim2.new(0, 0, 0.454706937, 0) Toggle.Size = UDim2.new(0, 90, 0, 38) Toggle.Font = Enum.Font.SourceSans Toggle.Text = "Toggle" Toggle.TextColor3 = Color3.fromRGB(255, 0, 0) Toggle.TextSize = 28.000 Toggle.Draggable = true Toggle.MouseButton1Click:connect(function() Library:ToggleUI() end) local Corner = Instance.new("UICorner") Corner.Name = "Corner" Corner.Parent = Toggle
