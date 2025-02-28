@@ -1,0 +1,114 @@
+local Players = game:GetService("Players")
+local RunService = game:GetService("RunService")
+local LocalPlayer = Players.LocalPlayer
+local Mouse = game.Players.LocalPlayer:GetMouse()
+local Airshot = false
+local AirPrediction = 0.13241123311111111
+local AirSmoothness = 0.2
+local AirSmoothEnabled = true
+local AutoAir = true
+local EnemyAir = true
+local AirshotMaterial = Part -- Move, Around, Jumps, Nothing
+local JumpCheck = true
+local Jump = -0.92
+local Fall = -1.91
+local AutoAirType = Enum.HumanoidStateType.Freefall
+
+-- Function to remove ESP chams
+local function removeCham(cham)
+    if cham then
+        cham:Destroy()
+    end
+end
+
+local currentCham
+
+function FindNearestEnemy()
+    local ClosestDistance, ClosestPlayer = math.huge, nil
+    local CenterPosition = Vector2.new(game:GetService("GuiService"):GetScreenResolution().X / 2, game:GetService("GuiService"):GetScreenResolution().Y / 2)
+
+    for _, Player in ipairs(game:GetService("Players"):GetPlayers()) do
+        if Player ~= LocalPlayer then
+            local Character = Player.Character
+            if Character and Character:FindFirstChild("HumanoidRootPart") and Character.Humanoid.Health > 0 then
+                local Position, IsVisibleOnViewport = game:GetService("Workspace").CurrentCamera:WorldToViewportPoint(Character.HumanoidRootPart.Position)
+
+                if IsVisibleOnViewport then
+                    local Distance = (CenterPosition - Vector2.new(Position.X, Position.Y)).Magnitude
+                    if Distance < ClosestDistance then
+                        ClosestPlayer = Character.HumanoidRootPart
+                        ClosestDistance = Distance
+                    end
+                end
+            end
+        end
+    end
+
+    return ClosestPlayer
+end
+
+local enemy = nil
+
+-- Function to aim the camera at the nearest enemy's HumanoidRootPart
+RunService.Heartbeat:Connect(function()
+    if CamlockState == true then
+        if enemy then
+            local camera = workspace.CurrentCamera
+            local targetCFrame = CFrame.new(camera.CFrame.p, enemy.Position + enemy.Velocity * Prediction)
+            if SmoothEnabled then
+                camera.CFrame = camera.CFrame:Lerp(targetCFrame, Smoothness)
+            else
+                camera.CFrame = targetCFrame
+            end
+        end
+    end
+end)
+
+local gui = Instance.new("ScreenGui")
+gui.Name = "Dukeshadow"
+gui.Parent = game.CoreGui
+
+local TextButton = Instance.new("TextButton")
+TextButton.Text = "Auto Air"
+TextButton.TextSize = 25
+TextButton.TextColor3 = Color3.new(1, 1, 1)
+TextButton.BackgroundColor3 = Color3.new(0, 0, 0) -- Dark shade of black
+TextButton.BorderColor3 = Color3.new(0, 0, 0) -- Slightly lighter shade of black
+TextButton.BorderSizePixel = 4
+TextButton.BackgroundTransparency = 1
+TextButton.Font = Enum.Font.Code
+TextButton.Size = UDim2.new(0.2, 0, 0.2, 0)
+TextButton.Position = UDim2.new(0, 0.9, 0.4, 1)
+local state = true
+
+TextButton.MouseButton1Click:Connect(function()
+    state = not state
+    if not state then
+        TextButton.Text = "Auto Air"
+TextButton.TextColor3 = Color3.new(0, 255, 255)
+        if AutoAir then
+            Air.Parent = true
+            enabledairshot = true
+            AutoAir = Freefall
+            Plr = AirToPlayer()
+            AirMaterial(Material.Auto.Air)
+            Airshot = true
+            enemyair = true
+        end
+    else
+        TextButton.Text = "Auto Air"
+TextButton.TextColor3 = Color3.new(1, 1, 1)
+        if AutoAir then
+            AirMaterial(Material.Auto.Air)
+            Airshot = nil
+            enemyair = nil
+        end
+        enemy = nil
+    end
+end)
+TextButton.Parent = gui
+TextButton.Draggable = true
+
+local cornerUI = Instance.new("UICorner")
+cornerUI.CornerRadius = UDim.new(0, 10)
+cornerUI.Parent = TextButton
